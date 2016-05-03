@@ -1,6 +1,6 @@
 ### Bancos
 
-| Banco         | ID    |
+| Banco         | Clave |
 | ------------- | ----- |
 | ABC CAPITAL   | 40138 |
 | AFIRME        | 40062 |
@@ -27,20 +27,20 @@
 
 ### Comercios
 
-| Comercio       | ID |
-| -------------- | -- |
-| WAL-MART       | 1  |
-| MERCO          | 2  |
-| CHEDRAUI       | 3  |
-| BODEGA AURRERA | 4  |
-| SAMS           | 5  |
-| SUBURBIA       | 6  |
-| SUPERAMA       | 7  |
+| Comercio       | Clave |
+| -------------- | ----- |
+| WAL-MART       | 1     |
+| MERCO          | 2     |
+| CHEDRAUI       | 3     |
+| BODEGA AURRERA | 4     |
+| SAMS           | 5     |
+| SUBURBIA       | 6     |
+| SUPERAMA       | 7     |
 
 ### cajeros.json
 
 ```
-curl -o cajeros.json 'https://www.banxico.org.mx/consultas-atm/cajeros.json?l=19.3741895,-99.25284239999999&b=&r=1000000000000000000000000000000000000000000000000000000000000'
+curl -o cajeros.json 'https://www.banxico.org.mx/consultas-atm/cajeros.json?l=19.432608,-99.133209&b=&r=1000000000000000000000000000000000000000000000000000000000000'
 ```
 
 Da algo como:
