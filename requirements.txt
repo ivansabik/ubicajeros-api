@@ -1,2 +1,2 @@
 unqlite
-simplejson
+flask
