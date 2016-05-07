@@ -64,3 +64,5 @@ python api.py
   ]
 }
 ```
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ivansabik/ubicajeros-api/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
