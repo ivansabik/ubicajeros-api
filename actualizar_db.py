@@ -1,10 +1,7 @@
-#!/usr/bin/env python2.7
 import locale
 from unqlite import UnQLite
 import pprint
 import requests
-
-import simplejson as json
 
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
