@@ -46,6 +46,7 @@ RADIO = '99999999999999999999'
 CAJEROS_URL = 'http://www.banxico.org.mx/consultas-atm/cajeros.json?l=19.432608,-99.133209&b=&r=' + RADIO
 CAJERO_URL = 'http://www.banxico.org.mx/consultas-atm/cajeros/info.json'
 
+print 'Buscando cajeros en ' + CAJEROS_URL
 cajeros_json = requests.get(CAJEROS_URL).json()['contenido']
 total_cajeros = len(cajeros_json)
 
@@ -62,7 +63,7 @@ for i, cajero_json in enumerate(cajeros_json):
         if not db.exists(cajero['id']):
             url_cajero = CAJERO_URL + '?id=' + str(cajero['id']) + '&banco=' + str(cajero['clave'])
             cajero_json = requests.get(url_cajero).json()['contenido']
-            cajero['cp'] = cajero_json['cp']
+            cajero['cp'] = str(cajero_json['cp'])
             cajero['horario'] = cajero_json['hs']
             cajero['direccion'] = cajero_json['d']
             db[cajero['id']] = cajero

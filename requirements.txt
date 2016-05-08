@@ -1,2 +1,3 @@
 unqlite
 flask
+flask-cors

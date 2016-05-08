@@ -1,8 +1,10 @@
-import locale
 from flask import Flask, jsonify, request
+from flask.ext.cors import CORS
 from unqlite import UnQLite
 
 app = Flask(__name__)
+CORS(app)
+
 db = UnQLite('cajeros.db', open_database=True)
 
 LIMITE = 1000
@@ -10,9 +12,9 @@ LIMITE = 1000
 @app.route('/api/v1/cajeros')
 def cajeros():
     empresa = request.args.get('empresa')
-    lat = request.args.get('lat')
-    lon = request.args.get('lon')
+    latlon = request.args.get('lat')
     nombre = request.args.get('nombre')
+    cp = request.args.get('cp')  # Buscar CPs cercanos tambien
     direccion = request.args.get('direccion')
     try:
         limite = int(request.args.get('limite'))
@@ -22,9 +24,16 @@ def cajeros():
     for clave, cajero in [item for item in db]:
         if len(cajeros) >= limite:
             break
-        cajero = eval(cajero)
-        cajeros.append(cajero)
-    resultados = {'resutados': cajeros, 'numero_cajeros': len(db)}
+        print cajero
+        try:
+            cajero = eval(cajero)
+            cajeros.append(cajero)
+        except:
+            print '------'
+            print cajero
+            print '------'
+            pass
+    resultados = {'num_resultados': len(cajeros), 'num_cajeros': len(db), 'resultados': cajeros}
     return jsonify(resultados)
 
 
