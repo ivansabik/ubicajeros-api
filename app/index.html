@@ -5,6 +5,7 @@
     <title>ubicajeros</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+
     </style>
     <script src="lib/jquery-1.9.0.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD50CIcx8YHtuWurvLz4CIgBJ09xR9o7J8"></script>
@@ -12,12 +13,12 @@
 </head>
 
 <body>
-    <div id="map" style="width: 300px; height: 300px;"></div>
+    <div id="map" style="width: 1000px; height: 800px;"></div>
     <script>
         $(function() {
             $("#map").googleMap({
                 zoom: 10,
-                coords: [48.895651, 2.290569]
+                coords: [19.42705, -99.127571]
             });
 
             localStorage.clear();
@@ -30,7 +31,7 @@
 
 
             $("#map").addMarker({
-                coords: [48.895651, 2.290569],
+                coords: [19.42705, -99.127571],
                 title: 'Marker n°1',
                 text: '<b>Lorem ipsum</b> dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' // HTML content
             });
