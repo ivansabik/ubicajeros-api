@@ -46,15 +46,17 @@ def cajeros():
             cajero = eval(cajero)
             cajero['estado'] = _asigna_estado(cajero['direccion'])
             if estado:
-                if estado in cajero['estado']:
+                limite = 25000
+                print estado.upper() + ' in ' + cajero['estado']
+                if estado.upper() in cajero['estado']:
                     cajeros.append(cajero)
                 else:
-                    break
-            cajeros.append(cajero)
+                    pass
+            # Sin filtros
+            else:
+                cajeros.append(cajero)
         except:
-            print'------'
             print cajero
-            print'------'
             pass
     resultados = {'num_resultados': len(cajeros),'num_cajeros': len(db),'resultados': cajeros}
     return jsonify(resultados)
