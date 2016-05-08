@@ -14,8 +14,8 @@ LIMITE = 1000
 def _asigna_estado(direccion):
     ESTADOS = ['AGUASCALIENTES', 'BAJA CALIFORNIA SUR', 'BAJA CALIFORNIA', 'CAMPECHE', 'CHIAPAS',
                'CHIHUAHUA', 'DISTRITO FEDERAL', 'COAHUILA', 'COLIMA', 'DURANGO', 'GUANAJUATO',
-               'GUERRERO', 'HIDALGO', 'JALISCO', 'ESTADO DE MEXICO', 'MICHOACAN', 'MORELOS', 'NAYARIT',
-               'NUEVO LEON', 'OAXACA', 'PUEBLA', 'QUERETARO', 'QUINTANA ROO',
+               'GUERRERO', 'HIDALGO', 'JALISCO', 'ESTADO DE MEXICO', 'MICHOACAN', 'MORELOS',
+               'NAYARIT', 'NUEVO LEON', 'OAXACA', 'PUEBLA', 'QUERETARO', 'QUINTANA ROO',
                'SAN LUIS POTOSI', 'SINALOA', 'SONORA', 'TABASCO', 'TAMAULIPAS', 'TLAXCALA',
                'VERACRUZ', 'YUCATAN', 'ZACATECAS']
     for estado in ESTADOS:
@@ -28,10 +28,8 @@ def _asigna_estado(direccion):
 
 @app.route('/api/v1/cajeros')
 def cajeros():
-    empresa = request.args.get('empresa')
-    latlon = request.args.get('lat')
-    nombre = request.args.get('nombre')
-    cp = request.args.get('cp')  # Buscar CPs cercanos tambien
+    latlon = request.args.get('latlon')
+    cp = request.args.get('cp')
     direccion = request.args.get('direccion')
     estado = request.args.get('estado')
     try:
@@ -40,14 +38,10 @@ def cajeros():
         limite = LIMITE
     cajeros = []
     for clave, cajero in [item for item in db]:
-        if len(cajeros) >= limite:
-            break
         try:
             cajero = eval(cajero)
             cajero['estado'] = _asigna_estado(cajero['direccion'])
             if estado:
-                limite = 25000
-                print estado.upper() + ' in ' + cajero['estado']
                 if estado.upper() in cajero['estado']:
                     cajeros.append(cajero)
                 else:
@@ -58,20 +52,22 @@ def cajeros():
         except:
             print cajero
             pass
-    resultados = {'num_resultados': len(cajeros),'num_cajeros': len(db),'resultados': cajeros}
+
+    cajeros = cajeros[0:limite]
+    resultados = {'num_resultados': len(cajeros), 'num_cajeros': len(db), 'resultados': cajeros}
     return jsonify(resultados)
 
 
-@app.route('/api/v1/cajero/<clave>')
-def cajero(clave):
-    if db.exists(clave):
-        cajero = db[clave]
+@app.route('/api/v1/cajero/<id>')
+def cajero(id):
+    if db.exists(id):
+        cajero = db[id]
         cajero = eval(cajero)
         cajero['estado'] = _asigna_estado(cajero['direccion'])
         return jsonify(cajero)
     else:
-        error = {'mensaje_error':'No existen cajeros con clave'+ str(clave)}
+        error = {'mensaje_error': 'No existen cajeros con id' + str(id)}
         return jsonify(error)
 
-if __name__ =='__main__':
+if __name__ == '__main__':
     app.run(debug=True)

@@ -1,9 +1,7 @@
-import locale
-from unqlite import UnQLite
-import pprint
-import requests
+import datetime
 
-locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+from unqlite import UnQLite
+import requests
 
 NOMBRES = {
     40138: 'ABC CAPITAL',
@@ -53,21 +51,21 @@ total_cajeros = len(cajeros_json)
 for i, cajero_json in enumerate(cajeros_json):
     cajero = {}
     cajero['id'] = cajero_json['id']
-    cajero['clave'] = cajero_json['cb']
-    cajero['lat'] = cajero_json['l']['lng']
-    cajero['lon'] = cajero_json['l']['lat']
-    cajero['laton'] = str(cajero['lat']) + ',' + str(cajero['lon'])
-    cajero['nombre'] = NOMBRES[cajero['clave']]
+    cajero['clave_institucion'] = cajero_json['cb']
+    cajero['lat'] = cajero_json['l']['lat']
+    cajero['lon'] = cajero_json['l']['lng']
+    cajero['nombre_institucion'] = NOMBRES[cajero['clave_institucion']]
     try:
         print 'Cajero ' + str(i) + ' de ' + str(total_cajeros) + ', ' + str(cajero['id']) + ' existe? ' + str(db.exists(cajero['id']))
         if not db.exists(cajero['id']):
-            url_cajero = CAJERO_URL + '?id=' + str(cajero['id']) + '&banco=' + str(cajero['clave'])
+            url_cajero = CAJERO_URL + '?id=' + str(cajero['id']) + '&banco=' + str(cajero['clave_institucion'])
             cajero_json = requests.get(url_cajero).json()['contenido']
             cajero['cp'] = str(cajero_json['cp'])
             cajero['horario'] = cajero_json['hs']
             cajero['direccion'] = cajero_json['d']
+            cajero['actualizacion'] = str(datetime.datetime.now())
             db[cajero['id']] = cajero
-            pprint.pprint(cajero)
+            print(cajero)
     except UnicodeEncodeError:
         print 'UnicodeEncodeError'
         print cajero

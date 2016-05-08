@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ubicajeros</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD50CIcx8YHtuWurvLz4CIgBJ09xR9o7J8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.googlemap/1.5/jquery.googlemap.min.js"></script>
+</head>
+
+<body>
+    <div id="map" style="width: 1000px; height: 800px;"></div>
+    <script>
+        function addMarker(item, index) {
+            $("#map").addMarker({
+                coords: [item.lat, item.lon],
+                title: item.nombre,
+                text: '<b>' + item.direccion + '</b>'
+            });
+        }
+        $(function() {
+            $("#map").googleMap({
+                zoom: 15,
+                coords: [19.42705, -99.127571]
+            });
+
+            $.getJSON('http://localhost:5000/api/v1/cajeros?estado=distrito', function(data) {
+                data.resultados.forEach(addMarker);
+            })
+        })
+    </script>
+</body>
+
+</html>

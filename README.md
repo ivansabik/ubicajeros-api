@@ -16,20 +16,27 @@ pip install -r requirements.txt
 python api.py
 ```
 
+Puedes hacer llamadas en `http://localhost:5000/api/v1/cajeros` ó en `http://localhost:5000/api/v1/cajeros`.
 
-### /api/v1/cajero/000000000005959
+## Endpoints
+
+- /api/v1/cajeros
+- /api/v1/cajero/<id>
+
+### /api/v1/cajero/J16621
 
 ```javascript
 {
-  "clave": 40012,
-  "cp": "14200",
-  "direccion": "CARRETERA PICACHO AJUSCO 175 , COL. HEROES DE PADIERNA, CIUDAD DE MEXICO, DISTRITO FEDERAL CP. 14200",
-  "horario": "00:00-23:59",
-  "id": "000000000005959",
-  "lat": -99.212138,
-  "laton": "-99.212138,19.298659",
-  "lon": 19.298659,
-  "nombre": "BBVA BANCOMER"
+  "actualizacion": "2016-05-08 17:30:02.114600",
+  "clave_institucion": 37166,
+  "cp": "86500",
+  "direccion": "Pasaje Cinema C\u00e1rdenas Loc. 2,SN,Centro,C\u00e1rdenas,Tabasco",
+  "estado": "TABASCO",
+  "horario": "08:30-16:30",
+  "id": "J16621",
+  "lat": 17.98894,
+  "lon": -93.37776,
+  "nombre_institucion": "BANSEFI"
 }
 ```
 
@@ -37,29 +44,67 @@ python api.py
 
 ```javascript
 {
-  "numero_cajeros": 35744,
-  "resutados": [
+  "num_cajeros": 434,
+  "num_resultados": 2,
+  "resultados": [
     {
-      "clave": 40012,
-      "cp": "06000",
-      "direccion": "MADERO 70 , COL. CENTRO, CIUDAD DE MEXICO, DISTRITO FEDERAL CP. 06000",
+      "actualizacion": "2016-05-08 17:30:18.002034",
+      "clave_institucion": 40002,
+      "cp": "56600",
+      "direccion": "AV. TEZOZOMOC,S/N,ALFREDO BARRANDA,CHALCO,ESTADO DE MEXICO",
+      "estado": "ESTADO DE MEXICO",
       "horario": "00:00-23:59",
-      "id": "000000000000146",
-      "lat": -99.134908,
-      "laton": "-99.134908,19.433321",
-      "lon": 19.433321,
-      "nombre": "BBVA BANCOMER"
+      "id": "4190-VALLEDEC",
+      "lat": 19.2779192,
+      "lon": -98.946103,
+      "nombre_institucion": "BANAMEX"
     },
     {
-      "clave": 40002,
-      "cp": "93260",
-      "direccion": "BLVD. LAZARO CARDENAS,807,MORELOS,POZA RICA,VERACRUZ",
+      "actualizacion": "2016-05-08 17:30:16.196350",
+      "clave_institucion": 40002,
+      "cp": "31380",
+      "direccion": "BLVD. VICENTE LOMBARDO TOLEDANO,4800,CONCORDIA,CHIHUAHUA,CHIHUAHUA",
+      "estado": "CHIHUAHUA",
       "horario": "00:00-23:59",
-      "id": "3038-PLAZATAJI",
-      "lat": -97.464435,
-      "laton": "-97.464435,20.524872",
-      "lon": 20.524872,
-      "nombre": "BANAMEX"
+      "id": "4176-ALSUPERRO",
+      "lat": 28.6511284,
+      "lon": -106.02612,
+      "nombre_institucion": "BANAMEX"
+    }
+  ]
+}
+```
+
+### /api/v1/cajeros?estado=distrito&limite=2
+
+```javascript
+{
+  "num_cajeros": 434,
+  "num_resultados": 2,
+  "resultados": [
+    {
+      "actualizacion": "2016-05-08 17:30:18.743436",
+      "clave_institucion": 40002,
+      "cp": "2830",
+      "direccion": "AV. CUITLAHUAC,3423,SAN BERNABE,AZCAPOTZALCO,DISTRITO FEDERAL",
+      "estado": "DISTRITO FEDERAL",
+      "horario": "00:00-23:59",
+      "id": "5524-CUITLAHUAC",
+      "lat": 19.470294,
+      "lon": -99.170741,
+      "nombre_institucion": "BANAMEX"
+    },
+    {
+      "actualizacion": "2016-05-08 17:30:15.066023",
+      "clave_institucion": 40002,
+      "cp": "6020",
+      "direccion": "MANUEL DOBLADO,10,CENTRO,CUAUHTEMOC,DISTRITO FEDERAL",
+      "estado": "DISTRITO FEDERAL",
+      "horario": "00:00-23:59",
+      "id": "1942-PLAZAMIXC",
+      "lat": 19.6264846,
+      "lon": -99.297088,
+      "nombre_institucion": "BANAMEX"
     }
   ]
 }
