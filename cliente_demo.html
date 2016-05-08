@@ -5,7 +5,13 @@
     <title>ubicajeros</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-
+    #map {
+      height: 100%;
+      width: 100%;
+      position:absolute;
+      top: 0;
+      left: 0;
+    }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD50CIcx8YHtuWurvLz4CIgBJ09xR9o7J8"></script>
@@ -13,13 +19,14 @@
 </head>
 
 <body>
-    <div id="map" style="width: 1000px; height: 800px;"></div>
+    <div id="map"></div>
     <script>
         function addMarker(item, index) {
+            console.log(item)
             $("#map").addMarker({
                 coords: [item.lat, item.lon],
-                title: item.nombre,
-                text: '<b>' + item.direccion + '</b>'
+                title: item.id,
+                text: 'Institución: '+ item.nombre_institucion + '</br>Dirección: '+ item.direccion + '</br>CP: '+ item.cp + '</br>Horario: ' + item.horario
             });
         }
         $(function() {
