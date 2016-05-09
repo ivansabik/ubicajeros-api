@@ -30,9 +30,9 @@ python api.py
 
 Puedes hacer llamadas en `http://localhost:5000/api/v1`.
 
-## App demo
+## App demo (cliente_demo.html)
 
-Con la información del DF solamente,  usa almacenamiento local HTML5 que tiene límite.
+<img width="700" alt="" src="http://g.recordit.co/BT5pBlUM9X.gif">
 
 ## Endpoints
 

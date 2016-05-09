@@ -62,7 +62,7 @@ for i, cajero_json in enumerate(cajeros_json):
     cajero['lon'] = cajero_json['l']['lng']
     cajero['nombre_institucion'] = NOMBRES[cajero['clave_institucion']]
     try:
-        print 'Cajero ' + str(i) + ' de ' + str(total_cajeros) + ', ' + str(cajero['id']) + ' existe? ' + str(db.exists(cajero['id']))
+        # print 'Cajero ' + str(i) + ' de ' + str(total_cajeros) + ', ' + str(cajero['id']) + ' existe? ' + str(db.exists(cajero['id']))
         if not db.exists(cajero['id']):
             url_cajero = CAJERO_URL + '?id=' + str(cajero['id']) + '&banco=' + str(cajero['clave_institucion'])
             cajero_json = requests.get(url_cajero).json()['contenido']
@@ -72,6 +72,7 @@ for i, cajero_json in enumerate(cajeros_json):
             cajero['actualizacion'] = str(datetime.datetime.now())
             db[cajero['id']] = cajero
             print(cajero)
+            print str(cajero['id']) + ' agregado: ' + str(db.exists(cajero['id']))
     except UnicodeEncodeError:
         print 'UnicodeEncodeError'
         print cajero
