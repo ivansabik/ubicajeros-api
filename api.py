@@ -34,8 +34,10 @@ def cajeros():
     estado = request.args.get('estado')
     try:
         limite = int(request.args.get('limite'))
+        limite_default = False
     except:
         limite = LIMITE
+        limite_default = True
     cajeros = []
     for clave, cajero in [item for item in db]:
         try:
@@ -53,7 +55,11 @@ def cajeros():
             print cajero
             pass
 
-    cajeros = cajeros[0:limite]
+    if estado and limite_default:
+        print 'pretty'
+        cajeros = cajeros
+    else:
+        cajeros = cajeros[0:limite]
     resultados = {'num_resultados': len(cajeros), 'num_cajeros': len(db), 'resultados': cajeros}
     return jsonify(resultados)
 
