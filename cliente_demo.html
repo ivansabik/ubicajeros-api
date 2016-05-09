@@ -5,39 +5,67 @@
     <title>ubicajeros</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-    #map {
-      height: 100%;
-      width: 100%;
-      position:absolute;
-      top: 0;
-      left: 0;
-    }
+        #map {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD50CIcx8YHtuWurvLz4CIgBJ09xR9o7J8"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.googlemap/1.5/jquery.googlemap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.24/gmaps.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.24/gmaps.min.js.map"></script>
 </head>
 
 <body>
     <div id="map"></div>
     <script>
-        function addMarker(item, index) {
-            console.log(item)
-            $("#map").addMarker({
-                coords: [item.lat, item.lon],
+        ESTADO = 'distrito'
+
+        function agregarMarcador(item, index) {
+            mapa.addMarker({
+                lat: item.lat,
+                lng: item.lon,
                 title: item.id,
-                text: 'Institución: '+ item.nombre_institucion + '</br>Dirección: '+ item.direccion + '</br>CP: '+ item.cp + '</br>Horario: ' + item.horario
+                infoWindow: {
+                    content: 'Institución: ' + item.nombre_institucion + '</br>Dirección: ' + item.direccion + '</br>CP: ' + item.cp + '</br>Horario: ' + item.horario
+                }
             });
         }
+
+        function geolocalizarCentrarMapa(mapa) {
+            GMaps.geolocate({
+                success: function(position) {
+                    mapa.setCenter(position.coords.latitude, position.coords.longitude);
+                    mapa.setZoom(18);
+                },
+                error: function(error) {
+                    alert('Error al obtener ubicación: ' + error.message);
+                }
+            });
+        }
+
         $(function() {
-            $("#map").googleMap({
-                zoom: 15,
-                coords: [19.42705, -99.127571]
+            mapa = new GMaps({
+                div: '#map',
+                lat: 19.42705,
+                lng: -99.127571,
+                zoom: 10
             });
 
-            $.getJSON('http://localhost:5000/api/v1/cajeros?estado=distrito', function(data) {
-                data.resultados.forEach(addMarker);
-            })
+            if (!localStorage.getItem('cajeros_' + ESTADO)) {
+                $.getJSON('http://localhost:5000/api/v1/cajeros?estado=' + ESTADO, function(data) {
+                    localStorage.setItem('cajeros_' + ESTADO, JSON.stringify(data));
+                    data.resultados.forEach(agregarMarcador);
+                    geolocalizarCentrarMapa(mapa);
+                })
+            } else {
+                cajeros = JSON.parse(localStorage.getItem('cajeros_' + ESTADO));
+                cajeros.resultados.forEach(agregarMarcador);
+                geolocalizarCentrarMapa(mapa);
+            }
         })
     </script>
 </body>

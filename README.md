@@ -3,7 +3,8 @@ API ubicajeros
 
 Basado en la app ubicajeros de BANXICO, hay mucha información mal sobre todo de latlon de las ubicaciones entonces repórtenla en la app para que la corrijan y nos sirva mejor a todos.
 
-```python actualizar_db.py -h
+```
+python actualizar_db.py -h
 usage: actualizar_db.py [-h] [-r RADIO] [-l LATLON]
 
 Ubicajeros API actualizar db
@@ -16,25 +17,27 @@ optional arguments:
                         Latlon de busqueda
 ```
 
-
-
-Si quieres actualizar desde cero borra el archivo `cajeros.db`.
+Si quieres actualizar desde cero borra el archivo `cajeros.db` y corre `python actualizar_db.py`.
 
 Para iniciar la API:
 
-```bash
+```
 git clone https://github.com/ivansabik/ubicajeros-api.git
 cd ubicajeros-api
 pip install -r requirements.txt
 python api.py
 ```
 
-Puedes hacer llamadas en `http://localhost:5000/api/v1/cajeros` ó en `http://localhost:5000/api/v1/cajeros`.
+Puedes hacer llamadas en `http://localhost:5000/api/v1`.
+
+## App demo
+
+Con la información del DF solamente,  usa almacenamiento local HTML5 que tiene límite.
 
 ## Endpoints
 
 - /api/v1/cajeros
-- /api/v1/cajero/<id>
+- /api/v1/cajero/ID_CAJERO
 
 ### /api/v1/cajero/J16621
 
