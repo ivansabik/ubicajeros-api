@@ -39,8 +39,6 @@ NOMBRES = {
     7: 'SUPERAMA'
 }
 
-db = UnQLite('cajeros.db', open_database=True)
-
 parser = argparse.ArgumentParser(description='Ubicajeros API actualizar db')
 parser.add_argument('-r', '--radio', required=False, help='Radio de busqueda en kms.', default='1000')
 parser.add_argument('-l', '--latlon', required=False, help='Latlon de busqueda', default='19.432608,-99.133209')
@@ -54,7 +52,10 @@ print 'Buscando cajeros en ' + CAJEROS_URL
 cajeros_json = requests.get(CAJEROS_URL).json()['contenido']
 total_cajeros = len(cajeros_json)
 
+agregados = 0
 for i, cajero_json in enumerate(cajeros_json):
+    db = UnQLite('cajeros.db')
+    db.open()
     cajero = {}
     cajero['id'] = cajero_json['id']
     cajero['clave_institucion'] = cajero_json['cb']
@@ -72,8 +73,11 @@ for i, cajero_json in enumerate(cajeros_json):
             cajero['actualizacion'] = str(datetime.datetime.now())
             db[cajero['id']] = cajero
             print 'Agregado: ' + str(cajero)
+            agregados += 1
+            db.close()
     except UnicodeEncodeError:
+        db.close()
         print 'UnicodeEncodeError'
         print cajero
         pass
-db.close()
+print 'Cajeros agregados: ' + str(agregados)
