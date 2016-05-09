@@ -1,3 +1,4 @@
+import argparse
 import datetime
 
 from unqlite import UnQLite
@@ -40,8 +41,13 @@ NOMBRES = {
 
 db = UnQLite('cajeros.db', open_database=True)
 
-RADIO = '99999999999999999999'
-CAJEROS_URL = 'http://www.banxico.org.mx/consultas-atm/cajeros.json?l=19.432608,-99.133209&b=&r=' + RADIO
+parser = argparse.ArgumentParser(description='Ubicajeros API actualizar db')
+parser.add_argument('-r', '--radio', required=False, help='Radio de busqueda en kms.', default='1000')
+parser.add_argument('-l', '--latlon', required=False, help='Latlon de busqueda', default='19.432608,-99.133209')
+
+args = parser.parse_args()
+
+CAJEROS_URL = 'http://www.banxico.org.mx/consultas-atm/cajeros.json?l=' + args.latlon + '&b=&r=' + args.radio
 CAJERO_URL = 'http://www.banxico.org.mx/consultas-atm/cajeros/info.json'
 
 print 'Buscando cajeros en ' + CAJEROS_URL

@@ -3,7 +3,20 @@ API ubicajeros
 
 Basado en la app ubicajeros de BANXICO, hay mucha información mal sobre todo de latlon de las ubicaciones entonces repórtenla en la app para que la corrijan y nos sirva mejor a todos.
 
-```python actualizar_db.py```
+```python actualizar_db.py -h
+usage: actualizar_db.py [-h] [-r RADIO] [-l LATLON]
+
+Ubicajeros API actualizar db
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -r RADIO, --radio RADIO
+                        Radio de busqueda en kms.
+  -l LATLON, --latlon LATLON
+                        Latlon de busqueda
+```
+
+
 
 Si quieres actualizar desde cero borra el archivo `cajeros.db`.
 
