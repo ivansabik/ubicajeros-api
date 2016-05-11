@@ -74,10 +74,10 @@ for i, cajero_json in enumerate(cajeros_json):
             db[cajero['id']] = cajero
             print 'Agregado: ' + str(cajero)
             agregados += 1
-            db.close()
     except UnicodeEncodeError:
-        db.close()
         print 'UnicodeEncodeError'
         print cajero
         pass
+    finally:
+        db.close()
 print 'Cajeros agregados: ' + str(agregados)

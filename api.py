@@ -56,7 +56,6 @@ def cajeros():
             pass
 
     if estado and limite_default:
-        print 'pretty'
         cajeros = cajeros
     else:
         cajeros = cajeros[0:limite]
