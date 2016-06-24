@@ -40,12 +40,15 @@ NOMBRES = {
 }
 
 parser = argparse.ArgumentParser(description='Ubicajeros API actualizar db')
-parser.add_argument('-r', '--radio', required=False, help='Radio de busqueda en kms.', default='1000')
-parser.add_argument('-l', '--latlon', required=False, help='Latlon de busqueda', default='19.432608,-99.133209')
+parser.add_argument('-r', '--radio', required=False, help='Radio de busqueda en kms.',
+                    default='1000')
+parser.add_argument('-l', '--latlon', required=False, help='Latlon de busqueda',
+                    default='19.432608,-99.133209')
 
 args = parser.parse_args()
 
-CAJEROS_URL = 'http://www.banxico.org.mx/consultas-atm/cajeros.json?l=' + args.latlon + '&b=&r=' + args.radio
+CAJEROS_URL = ('http://www.banxico.org.mx/consultas-atm/cajeros.json?l=' +
+               args.latlon + '&b=&r=' + args.radio)
 CAJERO_URL = 'http://www.banxico.org.mx/consultas-atm/cajeros/info.json'
 
 print 'Buscando cajeros en ' + CAJEROS_URL
@@ -54,18 +57,20 @@ total_cajeros = len(cajeros_json)
 
 agregados = 0
 for i, cajero_json in enumerate(cajeros_json):
-    db = UnQLite('cajeros.db')
-    db.open()
-    cajero = {}
-    cajero['id'] = cajero_json['id']
-    cajero['clave_institucion'] = cajero_json['cb']
-    cajero['lat'] = cajero_json['l']['lat']
-    cajero['lon'] = cajero_json['l']['lng']
-    cajero['nombre_institucion'] = NOMBRES[cajero['clave_institucion']]
     try:
-        print 'Cajero ' + str(i) + ' de ' + str(total_cajeros) + ', ' + str(cajero['id']) + ' existe? ' + str(db.exists(cajero['id']))
+        db = UnQLite('cajeros.db')
+        db.open()
+        cajero = {}
+        cajero['id'] = cajero_json['id']
+        cajero['clave_institucion'] = cajero_json['cb']
+        cajero['lat'] = cajero_json['l']['lat']
+        cajero['lon'] = cajero_json['l']['lng']
+        cajero['nombre_institucion'] = NOMBRES[cajero['clave_institucion']]
+        print ('Cajero ' + str(i) + ' de ' + str(total_cajeros) + ', ' + str(cajero['id']) +
+               ' existe? ' + str(db.exists(cajero['id'])))
         if not db.exists(cajero['id']):
-            url_cajero = CAJERO_URL + '?id=' + str(cajero['id']) + '&banco=' + str(cajero['clave_institucion'])
+            url_cajero = (CAJERO_URL + '?id=' + str(cajero['id']) + '&banco=' +
+                          str(cajero['clave_institucion']))
             cajero_json = requests.get(url_cajero).json()['contenido']
             cajero['cp'] = str(cajero_json['cp'])
             cajero['horario'] = cajero_json['hs']
@@ -74,8 +79,7 @@ for i, cajero_json in enumerate(cajeros_json):
             db[cajero['id']] = cajero
             print 'Agregado: ' + str(cajero)
             agregados += 1
-    except UnicodeEncodeError:
-        print 'UnicodeEncodeError'
+    except:
         print cajero
         pass
     finally:

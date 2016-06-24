@@ -4,6 +4,14 @@ API ubicajeros
 Basado en la app ubicajeros de BANXICO, hay mucha información mal sobre todo de latlon de las ubicaciones entonces repórtenla en la app para que la corrijan y nos sirva mejor a todos.
 
 ```
+git clone https://github.com/ivansabik/ubicajeros-api.git
+cd ubicajeros-api
+pip install -r requirements.txt
+```
+
+Primero puedes actualizar la base de datos:
+
+```
 python actualizar_db.py -h
 usage: actualizar_db.py [-h] [-r RADIO] [-l LATLON]
 
@@ -17,14 +25,11 @@ optional arguments:
                         Latlon de busqueda
 ```
 
-Si quieres actualizar desde cero borra el archivo `cajeros.db` y corre `python actualizar_db.py`.
+Si quieres obtener todos los cajeros nuevamente desde cero borra el archivo `cajeros.db` y corre `python actualizar_db.py`.
 
 Para iniciar la API:
 
 ```
-git clone https://github.com/ivansabik/ubicajeros-api.git
-cd ubicajeros-api
-pip install -r requirements.txt
 python api.py
 ```
 
@@ -32,7 +37,7 @@ Puedes hacer llamadas en `http://localhost:5000/api/v1`.
 
 ## App demo (cliente_demo.html)
 
-<img width="700" alt="" src="http://g.recordit.co/BT5pBlUM9X.gif">
+
 
 ## Endpoints
 
@@ -125,5 +130,3 @@ Puedes hacer llamadas en `http://localhost:5000/api/v1`.
   ]
 }
 ```
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ivansabik/ubicajeros-api/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
