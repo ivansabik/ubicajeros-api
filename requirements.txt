@@ -1,3 +1,5 @@
 unqlite
 flask
 flask-cors
+Cython
+requests
