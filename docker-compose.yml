@@ -1,0 +1,19 @@
+version: '2'
+services:
+  www:
+    build: .
+    ports:
+      - 5000:5000
+    volumes:
+      - ./:/opt/ubicajeros/
+    environment:
+      - AWS_ACCESS_KEY_ID=supersecret
+      - AWS_SECRET_ACCESS_KEY=supersecret
+      - DYNAMODB_HOST=http://db:7777
+  db:
+    image: tray/dynamodb-local
+    ports:
+      - 7777:7777
+    volumes:
+      - ./data/dynamodb/:/opt/dynamodb
+    command: -port 7777 -dbPath /opt/dynamodb

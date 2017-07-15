@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ubicajeros</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #map {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY_DE_GOOGLE_MAPS"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.24/gmaps.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.24/gmaps.min.js.map"></script>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        ESTADO = 'distrito'
+
+        function agregarMarcador(item, index) {
+            mapa.addMarker({
+                lat: item.lat,
+                lng: item.lon,
+                title: item.id,
+                infoWindow: {
+                    content: 'Institución: ' + item.nombre_institucion + '</br>Dirección: ' + item.direccion + '</br>CP: ' + item.cp + '</br>Horario: ' + item.horario
+                }
+            });
+        }
+
+        function geolocalizarCentrarMapa(mapa) {
+            GMaps.geolocate({
+                success: function(position) {
+                    mapa.setCenter(position.coords.latitude, position.coords.longitude);
+                    mapa.setZoom(18);
+                },
+                error: function(error) {
+                    alert('Error al obtener ubicación: ' + error.message);
+                }
+            });
+        }
+
+        $(function() {
+            mapa = new GMaps({
+                div: '#map',
+                lat: 19.42705,
+                lng: -99.127571,
+                zoom: 10
+            });
+
+            if (!localStorage.getItem('cajeros_' + ESTADO)) {
+                $.getJSON('http://localhost:5000/api/v1/cajeros?estado=' + ESTADO, function(data) {
+                    localStorage.setItem('cajeros_' + ESTADO, JSON.stringify(data));
+                    data.resultados.forEach(agregarMarcador);
+                    geolocalizarCentrarMapa(mapa);
+                })
+            } else {
+                cajeros = JSON.parse(localStorage.getItem('cajeros_' + ESTADO));
+                cajeros.resultados.forEach(agregarMarcador);
+                geolocalizarCentrarMapa(mapa);
+            }
+        })
+    </script>
+</body>
+
+</html>
