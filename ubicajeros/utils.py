@@ -59,7 +59,12 @@ def get_cajeros(latlon=const.DEFAULT_LAT_LON, radius=const.DEFAULT_SEARCH_RADIUS
             print('Cajero {} already exists in db'.format(cajero_json['id']))
             continue
         except Cajero.DoesNotExist:
-            _get_cajero(cajero_json)
+            try:
+                _get_cajero(cajero_json)
+            except:
+                print(cajero_json)
+                traceback.print_exc()
+                continue
         except:
             print(cajero_json)
             traceback.print_exc()

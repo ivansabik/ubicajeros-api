@@ -3,11 +3,11 @@ Ubicajeros API
 
 [![Lintly](https://lintly.com/gh/ivansabik/ubicajeros-api/badge.svg)](https://lintly.com/gh/ivansabik/ubicajeros-api/)
 
-HTTP API for getting ATMs (Cajeros) available in Mexico. If gets the information from calls to the ubicajeros app from Banco de Mexico (BANXICO).
+HTTP API for getting ATMs (Cajeros) available in Mexico. If gets the information from calls to the ubicajeros app from Banco de Mexico (BANXICO). There's a bunch of wrong lat/lon but those need to be reported in the BANXICO app and fixed from there.
 
 Dependencies:
 - flask
-- AWS Dynamodb with pynamodb
+- pynamodb
 - zappa for serverless deployment
 
 ## Installation

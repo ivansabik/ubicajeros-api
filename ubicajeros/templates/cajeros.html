@@ -22,7 +22,7 @@
 <body>
     <div id="map"></div>
     <script>
-        ESTADO = 'distrito';
+        ESTADO = 'DISTRITO FEDERAL';
 
         function agregarMarcador(item, index) {
             mapa.addMarker({
@@ -56,14 +56,14 @@
             });
 
             if (!localStorage.getItem('cajeros_' + ESTADO)) {
-                $.getJSON('{{ api_url }}/cajeros?estado=' + ESTADO, function(data) {
+                $.getJSON('{{ api_url }}/cajeros?state=' + ESTADO, function(data) {
                     localStorage.setItem('cajeros_' + ESTADO, JSON.stringify(data));
-                    data.resultados.forEach(agregarMarcador);
+                    data.cajeros.forEach(agregarMarcador);
                     geolocalizarCentrarMapa(mapa);
                 })
             } else {
-                cajeros = JSON.parse(localStorage.getItem('cajeros_' + ESTADO));
-                cajeros.resultados.forEach(agregarMarcador);
+                results = JSON.parse(localStorage.getItem('cajeros_' + ESTADO));
+                results.cajeros.forEach(agregarMarcador);
                 geolocalizarCentrarMapa(mapa);
             }
         })

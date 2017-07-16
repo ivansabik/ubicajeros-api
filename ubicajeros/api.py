@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 API_URL = os.environ.get('API_URL', 'http://localhost:5000')
 RESULTS_LIMIT = int(os.environ.get('RESULTS_LIMIT', '1000'))
-GMAPS_API_KEY = os.environ.get('GMAPS_API_KEY', '')
+GMAPS_API_KEY = os.environ.get('GMAPS_API_KEY')
 
 
 @app.before_first_request

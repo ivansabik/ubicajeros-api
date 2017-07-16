@@ -20,6 +20,7 @@ ORG_NAMES = {
     40072: 'BANORTE-IXE',
     40127: 'AZTECA',
     40128: 'AUTOFIN',
+    40130: '',
     40131: 'BANCO FAMSA',
     40132: 'BMULTIVA',
     40134: '',
