@@ -1,0 +1,9 @@
+version: 0.1
+
+phases:
+  pre_build:
+    commands:
+      - pip install -r requirements.txt && pip install -e .
+  build:
+    commands:
+      - python bin/update_db.py -r 99999999999999999999999999999999999
