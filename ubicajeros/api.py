@@ -2,64 +2,45 @@ import os
 
 from flask import Flask, jsonify, request
 
-from models import create_tables
+from ubicajeros import const
+from ubicajeros.models import create_tables_if_not_exist, Cajero
 
 app = Flask(__name__)
 
-LIMIT = int(os.environ.get('RESULTS_LIMIT', '1000'))
+results_limit = int(os.environ.get('RESULTS_LIMIT', '1000'))
 
 
 @app.before_first_request
 def setup():
-    create_tables()
+    create_tables_if_not_exist()
 
 
 @app.route('/cajeros')
 def cajeros():
     latlon = request.args.get('latlon')
-    cp = request.args.get('cp')
-    direccion = request.args.get('direccion')
-    estado = request.args.get('estado')
-    try:
-        limite = int(request.args.get('limite'))
-        limite_default = False
-    except:
-        limite = LIMITE
-        limite_default = True
+    state = request.args.get('state')
     cajeros = []
-    for clave, cajero in [item for item in db]:
-        try:
-            cajero = eval(cajero)
-            if estado:
-                if estado.upper() in cajero['estado']:
-                    cajeros.append(cajero)
-                else:
-                    pass
-            # Sin filtros
-            else:
-                cajeros.append(cajero)
-        except:
-            print cajero
-            pass
-
-    if estado and limite_default:
-        cajeros = cajeros
+    if state:
+        for cajero in Cajero.scan(state__contains=state.upper()):
+            cajeros.append(cajero.to_dict())
+    elif latlon:
+        # To be implemented!
+        pass
     else:
-        cajeros = cajeros[0:limite]
-    resultados = {'num_resultados': len(cajeros), 'num_cajeros': len(db), 'resultados': cajeros}
-    return jsonify(resultados)
+        for cajero in Cajero.scan(limit=const.RESULTS_LIMIT):
+            cajeros.append(cajero.to_dict())
+    return jsonify({'cajeros': cajeros})
 
 
 @app.route('/cajero/<id>')
 def cajero(id):
-    if db.exists(id):
-        cajero = db[id]
-        cajero = eval(cajero)
-        return jsonify(cajero)
-    else:
-        error = {'mensaje_error': 'No existen cajeros con id' + str(id)}
+    try:
+        cajero = Cajero.get(id)
+        return jsonify(cajero.to_dict())
+    except Cajero.DoesNotExist:
+        error = {'error_message': 'No Cajero exists with ID {}'.format(id)}
         return jsonify(error)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

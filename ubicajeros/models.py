@@ -7,7 +7,7 @@ from pynamodb.models import Model
 dynamodb_host = os.getenv('DYNAMODB_HOST')
 
 
-def create_tables():
+def create_tables_if_not_exist():
     if not Cajero.exists():
         Cajero.create_table(read_capacity_units=5, write_capacity_units=2, wait=True)
 
@@ -27,3 +27,6 @@ class Cajero(Model):
     state = UnicodeAttribute(null=True)
     updated_at = UTCDateTimeAttribute(default=datetime.utcnow())
     zip_code = UnicodeAttribute(null=True)
+
+    def to_dict(self):
+        return self.__dict__['attribute_values']

@@ -1,4 +1,7 @@
 BASE_URL = 'http://www.banxico.org.mx/consultas-atm'
+BASE_URL_CAJERO = 'http://www.banxico.org.mx/consultas-atm/cajeros/info.json'
+DEFAULT_LAT_LON = '19.432608,-99.133209'
+DEFAULT_SEARCH_RADIUS = 1000
 ORG_NAMES = {
     37019: 'BANJERCITO',
     37166: 'BANSEFI',
@@ -33,6 +36,7 @@ ORG_NAMES = {
     6: 'SUBURBIA',
     7: 'SUPERAMA'
 }
+RESULTS_LIMIT = 1000
 STATES = [
     'AGUASCALIENTES', 'BAJA CALIFORNIA SUR', 'BAJA CALIFORNIA', 'CAMPECHE', 'CHIAPAS',
     'CHIHUAHUA', 'DISTRITO FEDERAL', 'COAHUILA', 'COLIMA', 'DURANGO', 'GUANAJUATO',
