@@ -1,0 +1,2 @@
+zappa==0.42.2
+-r requirements.txt

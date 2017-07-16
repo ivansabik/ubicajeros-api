@@ -1,6 +1,6 @@
-### Bancos
+### Orgs
 
-| Banco         | Clave |
+| Org nam       | Code  |
 | ------------- | ----- |
 | ABC CAPITAL   | 40138 |
 | AFIRME        | 40062 |
@@ -25,7 +25,7 @@
 | SANTANDER     | 40014 |
 | SCOTIABANK    | 40044 |
 
-### Comercios
+### Stores
 
 | Comercio       | Clave |
 | -------------- | ----- |
@@ -43,7 +43,7 @@
 curl -o cajeros.json 'https://www.banxico.org.mx/consultas-atm/cajeros.json?l=19.432608,-99.133209&b=&r=1000000000000000000000000000000000000000000000000000000000000'
 ```
 
-Da algo como:
+Give something like:
 
 ```javascript
 {
@@ -72,7 +72,7 @@ Da algo como:
 curl -o info.json 'https://www.banxico.org.mx/consultas-atm/cajeros/info.json?id=6552-SECTELEVI&banco=40002'
 ```
 
-Da algo como:
+Gives something linke:
 
 ```javascript
 {
