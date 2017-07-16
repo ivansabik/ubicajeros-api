@@ -63,7 +63,7 @@
                 })
             } else {
                 cajeros = JSON.parse(localStorage.getItem('cajeros_' + ESTADO));
-                cajeros.resultados.forEach(agregarMarcador);
+                cajeros.cajeros.forEach(agregarMarcador);
                 geolocalizarCentrarMapa(mapa);
             }
         })
