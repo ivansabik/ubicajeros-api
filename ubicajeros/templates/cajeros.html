@@ -14,7 +14,7 @@
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY_DE_GOOGLE_MAPS"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ gmaps_api_key }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.24/gmaps.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.24/gmaps.min.js.map"></script>
 </head>
@@ -22,7 +22,7 @@
 <body>
     <div id="map"></div>
     <script>
-        ESTADO = 'distrito'
+        ESTADO = 'distrito';
 
         function agregarMarcador(item, index) {
             mapa.addMarker({
@@ -30,7 +30,7 @@
                 lng: item.lon,
                 title: item.id,
                 infoWindow: {
-                    content: 'Institución: ' + item.nombre_institucion + '</br>Dirección: ' + item.direccion + '</br>CP: ' + item.cp + '</br>Horario: ' + item.horario
+                    content: 'Bank: ' + item.org_name + '</br>Address: ' + item.address + '</br>ZIP Code: ' + item.zip_code + '</br>Open Hours: ' + item.open_hours
                 }
             });
         }
@@ -42,7 +42,7 @@
                     mapa.setZoom(18);
                 },
                 error: function(error) {
-                    alert('Error al obtener ubicación: ' + error.message);
+                    alert('Could not get your current location: ' + error.message);
                 }
             });
         }
@@ -56,7 +56,7 @@
             });
 
             if (!localStorage.getItem('cajeros_' + ESTADO)) {
-                $.getJSON('http://localhost:5000/api/v1/cajeros?estado=' + ESTADO, function(data) {
+                $.getJSON('{{ api_url }}/cajeros?estado=' + ESTADO, function(data) {
                     localStorage.setItem('cajeros_' + ESTADO, JSON.stringify(data));
                     data.resultados.forEach(agregarMarcador);
                     geolocalizarCentrarMapa(mapa);

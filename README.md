@@ -64,7 +64,7 @@ You can run a demo client app at `/cajeros.html`
 - /cajeros
 - /cajero/ID_CAJERO
 
-### /api/v1/cajero/J16621
+### /cajero/J16621
 
 ```javascript
 {
@@ -80,7 +80,7 @@ You can run a demo client app at `/cajeros.html`
 }
 ```
 
-### /api/v1/cajeros
+### /cajeros
 
 ```javascript
 {
@@ -111,6 +111,6 @@ You can run a demo client app at `/cajeros.html`
 }
 ```
 
-### /api/v1/cajeros?estado=tabasco
+### /cajeros?estado=tabasco
 
 Returns only values for this state
