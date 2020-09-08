@@ -1,7 +1,7 @@
 Ubicajeros API
 ===========
 
-[![Lintly](https://lintly.com/gh/ivansabik/ubicajeros-api/badge.svg)](https://lintly.com/gh/ivansabik/ubicajeros-api/)
+[![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 HTTP API for getting ATMs (Cajeros) available in Mexico. If gets the information from calls to the ubicajeros app from Banco de Mexico (BANXICO). There's a bunch of wrong lat/lon but those need to be reported in the BANXICO app and fixed from there.
 
