@@ -47,14 +47,17 @@ def _get_cajero(cajero_json):
 
 
 def get_cajeros(latlon=const.DEFAULT_LAT_LON, radius=const.DEFAULT_SEARCH_RADIUS):
-    url_cajeros = (
-        "http://www.banxico.org.mx/consultas-atm/cajeros.json?l={}&b=&r={}".format(
-            latlon, radius
-        )
+    url_cajeros = "http://www.banxico.org.mx/consultas-atm/cajeros.json?l={}&b=&r={}&c=true".format(
+        latlon, radius
     )
-
     print("Getting " + url_cajeros)
-    cajeros_json = requests.get(url_cajeros).json()["contenido"]
+    cajeros_json = requests.get(url_cajeros)
+    try:
+        cajeros_json = cajeros_json.json()
+    except ValueError:
+        raise Exception("Unable to parse response: {}".format(cajeros_json.content))
+    else:
+        cajeros_json = cajeros_json["contenido"]
     total_cajeros = len(cajeros_json)
 
     create_tables_if_not_exist()
