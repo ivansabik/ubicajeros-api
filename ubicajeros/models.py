@@ -4,7 +4,7 @@ from datetime import datetime
 from pynamodb.attributes import NumberAttribute, UnicodeAttribute, UTCDateTimeAttribute
 from pynamodb.models import Model
 
-dynamodb_host = os.getenv('DYNAMODB_HOST')
+dynamodb_host = os.getenv("DYNAMODB_HOST")
 
 
 def create_tables_if_not_exist():
@@ -14,7 +14,7 @@ def create_tables_if_not_exist():
 
 class Cajero(Model):
     class Meta:
-        table_name = 'ubicajeros_cajeros'
+        table_name = "ubicajeros_cajeros"
         host = dynamodb_host
 
     address = UnicodeAttribute()
@@ -29,4 +29,4 @@ class Cajero(Model):
     zip_code = UnicodeAttribute(null=True)
 
     def to_dict(self):
-        return self.__dict__['attribute_values']
+        return self.__dict__["attribute_values"]
